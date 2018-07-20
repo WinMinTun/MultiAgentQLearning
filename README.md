@@ -20,4 +20,4 @@ The repo contains code to run experiments required for CS 7642 Summer 2018 Proje
 	* `soccer.py`: soccer game environment.
 	
 	
-* Perform experiments by running `python3 run.py <algo_name> <init_lr end_lr> <init_eps> <end_eps> <max_iter>` from terminal, or running `bash run.sh` to perform experiments in batch.
+* Perform experiments by running `python3 run.py <algo_name> <init_lr> <end_lr> <init_eps> <end_eps> <max_iter>` from terminal, or running `bash run.sh` to perform experiments in batch.
