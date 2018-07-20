@@ -1,0 +1,27 @@
+\begin{thebibliography}{1}
+
+\bibitem{GreenwaldCorrelatedQLearning2003}
+Amy Greenwald and Keith Hall.
+\newblock Correlated-{{Q Learning}}.
+\newblock In {\em Proceedings of the {{Twentieth International Conference}} on
+  {{International Conference}} on {{Machine Learning}}}, ICML'03, pages
+  242--249, Washington, DC, USA, 2003. {AAAI Press}.
+
+\bibitem{GreenwaldCorrelatedQLearning2005}
+Amy Greenwald, Keith Hall, and Martin Zinkevich.
+\newblock Correlated {{Q}}-{{Learning}}.
+\newblock Technical {{Report}} CS-05-08, {Brown University}, 2005.
+
+\bibitem{SuttonReinforcementLearningIntroduction1998}
+Richard~S. Sutton and Andrew~G. Barto.
+\newblock {\em Reinforcement {{Learning}}: {{An Introduction}}}.
+\newblock {MIT Press}, 1998.
+
+\bibitem{LittmanFriendorFoeQlearningGeneralSum2001}
+Michael~L. Littman.
+\newblock Friend-or-{{Foe Q}}-learning in {{General}}-{{Sum Games}}.
+\newblock In {\em Proceedings of the {{Eighteenth International Conference}} on
+  {{Machine Learning}}}, ICML '01, pages 322--328, San Francisco, CA, USA,
+  2001. {Morgan Kaufmann Publishers Inc.}
+
+\end{thebibliography}

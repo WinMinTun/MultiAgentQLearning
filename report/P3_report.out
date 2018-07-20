@@ -1,0 +1,7 @@
+\BOOKMARK [1][-]{section.1}{Game: Soccer}{}% 1
+\BOOKMARK [1][-]{section.2}{Clarifications: difficulties}{}% 2
+\BOOKMARK [1][-]{section.3}{Experiments and Results}{}% 3
+\BOOKMARK [2][-]{subsection.3.1}{Q-Learning}{section.3}% 4
+\BOOKMARK [2][-]{subsection.3.2}{Friend-Q}{section.3}% 5
+\BOOKMARK [2][-]{subsection.3.3}{Foe-Q}{section.3}% 6
+\BOOKMARK [2][-]{subsection.3.4}{CE-Q}{section.3}% 7
