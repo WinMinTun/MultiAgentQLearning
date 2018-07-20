@@ -96,7 +96,7 @@ def save_results(data, final_policy, Qtable, trial_num):
     np.save(os.path.join("results", "Qtable_{}.npy".format(trial_num)), Qtable)
 
 
-def maxmin(A, solver="glpk"):
+def maxmin(A, solver=None):
     num_vars = len(A)
     # minimize matrix c: minimize c*x
     c = [-1] + [0] * num_vars
@@ -121,7 +121,7 @@ def maxmin(A, solver="glpk"):
     sol = solvers.lp(c=c, G=G, h=h, A=A, b=b, solver=solver)
     return sol
 
-def ce(A, solver="glpk"): #correlated equilibrium
+def ce(A, solver=None): #correlated equilibrium
     num_vars = len(A)
     # maximize matrix c
     c = [sum(i) for i in A] # sum of payoffs for both players
@@ -129,7 +129,7 @@ def ce(A, solver="glpk"): #correlated equilibrium
     c = matrix(c)
     c *= -1 # cvxopt minimizes so *-1 to maximize the sum of both players' reward
     # constraints G*x <= h
-    G = build_ce_constraints(A=A)
+    G = create_G_matrix_CE(A=A)
     G = np.vstack([G, np.eye(num_vars) * -1]) # > 0 constraint for all vars
     h_size = len(G)
     G = matrix(G)
@@ -145,25 +145,24 @@ def ce(A, solver="glpk"): #correlated equilibrium
     sol = solvers.lp(c=c, G=G, h=h, A=A, b=b, solver=solver)
     return sol
 
-def build_ce_constraints(A):
-    num_vars = int(len(A) ** (1/2))
+def create_G_matrix_CE(A): #rationality constraints
+    num_vars = int(len(A) ** 0.5)
     G = []
     # row player
     for i in range(num_vars): # action row i
         for j in range(num_vars): # action row j
             if i != j:
-                constraints = [0 for i in A]
-                base_idx = i * num_vars
-                comp_idx = j * num_vars
+                constraints = [0] * len(A)
                 for k in range(num_vars):
-                    constraints[base_idx+k] = (- A[base_idx+k][0]
-                                               + A[comp_idx+k][0])
+                    constraints[i * num_vars + k] = (
+                        - A[i * num_vars + k][0]
+                        + A[j * num_vars + k][0])
                 G += [constraints]
     # col player
     for i in range(num_vars): # action column i
         for j in range(num_vars): # action column j
             if i != j:
-                constraints = [0 for i in A]
+                constraints = [0] * len(A)
                 for k in range(num_vars):
                     constraints[i + (k * num_vars)] = (
                         - A[i + (k * num_vars)][1] 
