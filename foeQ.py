@@ -3,7 +3,6 @@ foeQ
 """
 import numpy as np
 from soccer import *
-from itertools import count
 import random as rand
 import pandas as pd
 from util import *
@@ -137,6 +136,7 @@ class foeQ_2Q(object):
                 #print("yes")
                 #self.game.render()
                 s = self.game.reset()
+                p_A, p_B, v_A, v_B = self.gen_policy(s)
             bar.next()
         bar.finish()
 
@@ -280,6 +280,7 @@ class foeQ_1Q_2LP(object):
                 #print("yes")
                 #self.game.render()
                 s = self.game.reset()
+                p_A, p_B, v_A, v_B = self.gen_policy(s)
             bar.next()
         bar.finish()
 
@@ -426,6 +427,7 @@ class foeQ_1Q_1LP(object):
                 #print("yes")
                 #self.game.render()
                 s = self.game.reset()
+                p_A, p_B, v_A, v_B = self.gen_policy(s)
             bar.next()
         bar.finish()
 

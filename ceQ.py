@@ -3,7 +3,6 @@ ceQ
 """
 import numpy as np
 from soccer import *
-from itertools import count
 import random as rand
 import pandas as pd
 from util import *
@@ -112,6 +111,7 @@ class ceQ(object):
                 #print("yes")
                 #self.game.render()
                 s = self.game.reset()
+                p = self.gen_policy(s)
             bar.next()
         bar.finish()
 
