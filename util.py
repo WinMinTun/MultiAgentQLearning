@@ -97,23 +97,23 @@ def save_results(data, final_policy, Qtable, trial_num):
 
 
 def maxmin(A, solver=None):
-    num_vars = len(A)
+    nA = len(A) #number of actions for one player
     # minimize matrix c: minimize c*x
-    c = [-1] + [0] * num_vars
+    c = [-1] + [0] * nA
     c = np.array(c, dtype="float")
     c = matrix(c)
     # constraints G*x <= h
     G = np.matrix(A, dtype="float").T # reformat each variable is in a row
     G *= -1 # minimization constraint
-    G = np.vstack([G, np.eye(num_vars) * -1]) # > 0 constraint for all vars
-    new_col = [1] * num_vars + [0] * num_vars
+    G = np.vstack([G, np.eye(nA) * -1]) # > 0 constraint for all vars
+    new_col = [1] * nA + [0] * nA
     G = np.insert(G, 0, new_col, axis=1) # insert utility column
     G = matrix(G)
-    h = [0] * num_vars * 2
+    h = [0] * nA * 2
     h = np.array(h, dtype="float")
     h = matrix(h)
     # contraints Ax = b -> sum of all probabilites is 1
-    A = [0] + [1] * num_vars
+    A = [0] + [1] * nA
     A = np.matrix(A, dtype="float")
     A = matrix(A)
     b = np.matrix(1, dtype="float")
@@ -122,7 +122,7 @@ def maxmin(A, solver=None):
     return sol
 
 def ce(A, solver=None): #correlated equilibrium
-    num_vars = len(A)
+    nA = len(A) #number of joint actions for two players
     # maximize matrix c
     c = [sum(i) for i in A] # sum of payoffs for both players
     c = np.array(c, dtype="float")
@@ -130,14 +130,14 @@ def ce(A, solver=None): #correlated equilibrium
     c *= -1 # cvxopt minimizes so *-1 to maximize the sum of both players' reward
     # constraints G*x <= h
     G = create_G_matrix_CE(A=A)
-    G = np.vstack([G, np.eye(num_vars) * -1]) # > 0 constraint for all vars
+    G = np.vstack([G, np.eye(nA) * -1]) # > 0 constraint for all vars
     h_size = len(G)
     G = matrix(G)
     h = [0 for i in range(h_size)]
     h = np.array(h, dtype="float")
     h = matrix(h)
     # contraints Ax = b
-    A = [1 for i in range(num_vars)]
+    A = [1 for i in range(nA)]
     A = np.matrix(A, dtype="float")
     A = matrix(A)
     b = np.matrix(1, dtype="float")
@@ -146,27 +146,27 @@ def ce(A, solver=None): #correlated equilibrium
     return sol
 
 def create_G_matrix_CE(A): #rationality constraints
-    num_vars = int(len(A) ** 0.5)
+    nA = int(len(A) ** 0.5) #number of actions for one player
     G = []
     # row player
-    for i in range(num_vars): # action row i
-        for j in range(num_vars): # action row j
+    for i in range(nA): # action row i
+        for j in range(nA): # action row j
             if i != j:
                 constraints = [0] * len(A)
-                for k in range(num_vars):
-                    constraints[i * num_vars + k] = (
-                        - A[i * num_vars + k][0]
-                        + A[j * num_vars + k][0])
+                for k in range(nA):
+                    constraints[i * nA + k] = (
+                        - A[i * nA + k][0]
+                        + A[j * nA + k][0])
                 G += [constraints]
     # col player
-    for i in range(num_vars): # action column i
-        for j in range(num_vars): # action column j
+    for i in range(nA): # action column i
+        for j in range(nA): # action column j
             if i != j:
                 constraints = [0] * len(A)
-                for k in range(num_vars):
-                    constraints[i + (k * num_vars)] = (
-                        - A[i + (k * num_vars)][1] 
-                        + A[j + (k * num_vars)][1])
+                for k in range(nA):
+                    constraints[i + (k * nA)] = (
+                        - A[i + (k * nA)][1] 
+                        + A[j + (k * nA)][1])
                 G += [constraints]
     return np.matrix(G, dtype="float")
 
