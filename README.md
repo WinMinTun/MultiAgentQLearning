@@ -2,9 +2,10 @@
 
 The repo contains code to run experiments required for CS 7642 Summer 2018 Project 3.
 
-* Required packages: Python 3.6.5, Numpy 1.15.5, Pandas 0.23.1, Matplotlib 2.2.2, cvxopt 1.2.0.
+* Required packages: Python 3.6.5, Numpy 1.15.5, Pandas 0.23.1, Matplotlib 2.2.2, cvxopt 1.2.0, progress 1.4.
+	* progress 1.4  can be found [here](https://pypi.org/project/progress), and source code [here](https://stackoverflow.com/questions/3160699/python-progress-bar).
 * The repo contains these folders:
-	* `results`: contains csv files that are results from each experiments, Q tables in the format of `.npy`, Q-value difference plots, as well as `log.csv` recording parameters used in all experiments
+	* `results`: contains csv files that are results from each experiments, Q tables in the format of `.npy`, Q-value difference plots, as well as `log.csv` recording parameters used in all experiments. **This fold needs to be created before any experiment can be run**.
 	* `figs`: plots used in figures in the report.
 	* `report`: full report in PDF and LaTex format, and accessory files
 
