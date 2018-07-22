@@ -105,13 +105,15 @@ class ceQ(object):
             err_Q = np.abs(Q_value_prime - Q_value)
             Q_value = Q_value_prime
             #print("step: {}, Err_Q: {}".format(T, err_Q))
-            s = s_prime
+            
             T += 1
             if done:
                 #print("yes")
                 #self.game.render()
                 s = self.game.reset()
                 p = self.gen_policy(s)
+            else:
+                s = s_prime
             bar.next()
         bar.finish()
 

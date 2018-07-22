@@ -120,13 +120,15 @@ class friendQ_2Q(object):
             err_Q = np.abs(Q_value_prime - Q_value)
             Q_value = Q_value_prime
             #print("step: {}, Err_Q: {}".format(T, err_Q))
-            s = s_prime
+            #s = s_prime
             T += 1
             if done:
                 #print("yes")
                 #self.game.render()
                 s = self.game.reset()
                 p_A, p_B = self.gen_policy(s)
+            else:
+                s = s_prime
             bar.next()
         bar.finish()
 
@@ -261,13 +263,15 @@ class friendQ_1Q(object):
             err_Q = np.abs(Q_value_prime - Q_value)
             Q_value = Q_value_prime
             #print("step: {}, Err_Q: {}".format(T, err_Q))
-            s = s_prime
+            #s = s_prime
             T += 1
             if done:
                 #print("yes")
                 #self.game.render()
                 s = self.game.reset()
                 p_A, p_B = self.gen_policy(s)
+            else:
+                s = s_prime
             bar.next()
         bar.finish()
 
@@ -421,6 +425,8 @@ class friendQ_2Q_alt(object):
                 #self.game.render()
                 s = self.game.reset()
                 p_A, p_B = self.gen_policy(s)
+            else:
+                s = s_prime
             bar.next()
         bar.finish()
 
@@ -565,13 +571,15 @@ class friendQ_1Q_alt(object):
             err_Q = np.abs(Q_value_prime - Q_value)
             Q_value = Q_value_prime
             #print("step: {}, Err_Q: {}".format(T, err_Q))
-            s = s_prime
+            #s = s_prime
             T += 1
             if done:
                 #print("yes")
                 #self.game.render()
                 s = self.game.reset()
                 p_A, p_B = self.gen_policy(s)
+            else:
+                s = s_prime
             bar.next()
         bar.finish()
 
@@ -710,12 +718,14 @@ class friendQ_joint(object):
             err_Q = np.abs(Q_value_prime - Q_value)
             Q_value = Q_value_prime
             #print("step: {}, Err_Q: {}".format(T, err_Q))
-            s = s_prime
+            #s = s_prime
             T += 1
             if done:
                 #print("yes")
                 #self.game.render()
                 s = self.game.reset()
+            else:
+                s = s_prime
             bar.next()
         bar.finish()
 

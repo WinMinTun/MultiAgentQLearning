@@ -8,7 +8,10 @@ import pandas as pd
 from util import *
 from progress.bar import IncrementalBar as Bar
 
-class Q_offpolicy(object):
+class Q_offpolicy(object): #here off-policy according to Sutton's definition
+    #setting epsilon = 1, we have off-policy by Greenwald
+    #setting epsilon: 1-->0.001, we have on-policy by Greenwald
+    #detailed clarification see the report
 
     def __init__(self, game=soccer(),\
         alpha=0.9, alpha_end=0.001, alpha_decay=0.9999954, \
@@ -124,13 +127,15 @@ class Q_offpolicy(object):
             err_Q = np.abs(Q_value_prime - Q_value)
             Q_value = Q_value_prime
             #print("step: {}, Err_Q: {}".format(T, err_Q))
-            s = s_prime
+            
             T += 1
             if done:
                 #print("yes")
                 #self.game.render()
                 s = self.game.reset()
                 p_A, p_B = self.gen_policy(s)
+            else:
+                s = s_prime
             bar.next()
         bar.finish()
 
@@ -154,6 +159,8 @@ class Q_offpolicy(object):
 
 
 class Q_onpolicy(object):
+    #this is on-policy by Sutton's definition
+    #only used for comparison
 
     def __init__(self, game=soccer(),\
         alpha=0.9, alpha_end=0.001, alpha_decay=0.9999954, \
@@ -283,6 +290,9 @@ class Q_onpolicy(object):
                 #print("yes")
                 #self.game.render()
                 s = self.game.reset()
+                a = self.choose_action(p_A, p_B)
+            else:
+                s = s_prime
             bar.next()
         bar.finish()
 

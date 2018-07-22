@@ -130,13 +130,15 @@ class foeQ_2Q(object):
             err_Q = np.abs(Q_value_prime - Q_value)
             Q_value = Q_value_prime
             #print("step: {}, Err_Q: {}".format(T, err_Q))
-            s = s_prime
+            #s = s_prime
             T += 1
             if done:
                 #print("yes")
                 #self.game.render()
                 s = self.game.reset()
                 p_A, p_B, v_A, v_B = self.gen_policy(s)
+            else:
+                s = s_prime
             bar.next()
         bar.finish()
 
@@ -281,6 +283,8 @@ class foeQ_1Q_2LP(object):
                 #self.game.render()
                 s = self.game.reset()
                 p_A, p_B, v_A, v_B = self.gen_policy(s)
+            else:
+                s = s_prime
             bar.next()
         bar.finish()
 
@@ -421,13 +425,15 @@ class foeQ_1Q_1LP(object):
             err_Q = np.abs(Q_value_prime - Q_value)
             Q_value = Q_value_prime
             #print("step: {}, Err_Q: {}".format(T, err_Q))
-            s = s_prime
+            #s = s_prime
             T += 1
             if done:
                 #print("yes")
                 #self.game.render()
                 s = self.game.reset()
                 p_A, p_B, v_A, v_B = self.gen_policy(s)
+            else:
+                s = s_prime
             bar.next()
         bar.finish()
 
