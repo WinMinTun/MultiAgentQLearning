@@ -10,6 +10,9 @@ from progress.bar import IncrementalBar as Bar
 
 
 class ceQ(object):
+    """
+    two separate Q tables for both players are learned
+    """
 
     def __init__(self, game=soccer(), \
         alpha=0.9, alpha_end=0.001, alpha_decay=0.9999954, \

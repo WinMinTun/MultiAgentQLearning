@@ -9,6 +9,10 @@ from util import *
 from progress.bar import IncrementalBar as Bar
 
 class friendQ_2Q(object):
+    """
+    two separate Q tables for both players are learned
+    linprog on each Q table to get strategy for each player
+    """
 
     def __init__(self, game=soccer(),\
         alpha=0.9, alpha_end=0.001, alpha_decay=0.9999954, \
@@ -151,6 +155,11 @@ class friendQ_2Q(object):
         return Q_value
 
 class friendQ_1Q(object):
+    """
+    one Q tables for A is learned
+    Q table for be is assumed to be the negation of Q table for A
+    linprog on Q and -Q.T to get strategy for each player
+    """
 
     def __init__(self, game=soccer(),\
         alpha=0.9, alpha_end=0.001, alpha_decay=0.9999954, \
@@ -295,6 +304,11 @@ class friendQ_1Q(object):
 
 
 class friendQ_2Q_alt(object):
+    """
+    two separate Q tables for both players are learned
+    linprog on each Q table to get strategy for each player
+    alt means: here V(s') is evaluated by max, instead of expected value
+    """
 
     def __init__(self, game=soccer(),\
         alpha=0.9, alpha_end=0.001, alpha_decay=0.9999954, \
@@ -449,6 +463,12 @@ class friendQ_2Q_alt(object):
         return Q_value
 
 class friendQ_1Q_alt(object):
+    """
+    one Q tables for A is learned
+    Q table for be is assumed to be the negation of Q table for A
+    linprog on Q and -Q.T to get strategy for each player
+    alt means: here V(s') is evaluated by max, instead of expected value
+    """
 
     def __init__(self, game=soccer(),\
         alpha=0.9, alpha_end=0.001, alpha_decay=0.9999954, \
