@@ -97,50 +97,44 @@ def save_results(data, final_policy, Qtable, trial_num):
 
 
 def maxmin(A, solver=None):
-    nA = len(A) #number of actions for one player
+    nA = A.shape[0] #number of actions for one player
     # minimize matrix c: minimize c*x
-    c = [-1] + [0] * nA
-    c = np.array(c, dtype="float")
+    c = np.array([-1] + [0] * nA, dtype=float)
     c = matrix(c)
     # constraints G*x <= h
-    G = np.matrix(A, dtype="float").T # reformat each variable is in a row
+    G = np.matrix(A, dtype=float).T # reformat each variable is in a row
     G *= -1 # minimization constraint
     G = np.vstack([G, np.eye(nA) * -1]) # > 0 constraint for all vars
-    new_col = [1] * nA + [0] * nA
-    G = np.insert(G, 0, new_col, axis=1) # insert utility column
+    utility = np.hstack((np.ones(nA, dtype=float), np.zeros(nA, dtype=float))) # utility, 1 for rationality constraints, 0 for positive probability constraints
+    G = np.hstack((utility.reshape(-1,1), G)) # insert utility column
     G = matrix(G)
-    h = [0] * nA * 2
-    h = np.array(h, dtype="float")
+    h = np.zeros(nA * 2, dtype=float)
     h = matrix(h)
-    # contraints Ax = b -> sum of all probabilites is 1
+    # contraints Ax = b: sum of all probabilites is 1
     A = [0] + [1] * nA
-    A = np.matrix(A, dtype="float")
+    A = np.matrix(A, dtype=float)
     A = matrix(A)
-    b = np.matrix(1, dtype="float")
+    b = np.matrix(1, dtype=float)
     b = matrix(b)
     sol = solvers.lp(c=c, G=G, h=h, A=A, b=b, solver=solver)
     return sol
 
 def ce(A, solver=None): #correlated equilibrium
-    nA = len(A) #number of joint actions for two players
+    nA = A.shape[0] #number of joint actions for two players
     # maximize matrix c
-    c = [sum(i) for i in A] # sum of payoffs for both players
-    c = np.array(c, dtype="float")
+    c = A.sum(axis=1) # sum of payoffs for both players
     c = matrix(c)
     c *= -1 # cvxopt minimizes so *-1 to maximize the sum of both players' reward
     # constraints G*x <= h
     G = create_G_matrix_CE(A=A)
-    G = np.vstack([G, np.eye(nA) * -1]) # > 0 constraint for all vars
-    h_size = len(G)
+    G = np.vstack((G, -1 * np.eye(nA))) # > 0 constraint for all vars
+    h = np.zeros(G.shape[0], dtype=float)
     G = matrix(G)
-    h = [0 for i in range(h_size)]
-    h = np.array(h, dtype="float")
     h = matrix(h)
     # contraints Ax = b
-    A = [1 for i in range(nA)]
-    A = np.matrix(A, dtype="float")
+    A = np.matrix([1] * nA, dtype=float)
     A = matrix(A)
-    b = np.matrix(1, dtype="float")
+    b = np.matrix(1, dtype=float)
     b = matrix(b)
     sol = solvers.lp(c=c, G=G, h=h, A=A, b=b, solver=solver)
     return sol
@@ -152,31 +146,31 @@ def create_G_matrix_CE(A): #rationality constraints
     for i in range(nA): # action row i
         for j in range(nA): # action row j
             if i != j:
-                constraints = [0] * len(A)
+                temp = [0] * len(A)
                 for k in range(nA):
-                    constraints[i * nA + k] = (
+                    temp[i * nA + k] = (
                         - A[i * nA + k][0]
                         + A[j * nA + k][0])
-                G += [constraints]
+                G += [temp]
     # col player
     for i in range(nA): # action column i
         for j in range(nA): # action column j
             if i != j:
-                constraints = [0] * len(A)
+                temp = [0] * len(A)
                 for k in range(nA):
-                    constraints[i + (k * nA)] = (
+                    temp[i + (k * nA)] = (
                         - A[i + (k * nA)][1] 
                         + A[j + (k * nA)][1])
-                G += [constraints]
-    return np.matrix(G, dtype="float")
+                G += [temp]
+    return np.matrix(G, dtype=float)
 
 
 if __name__ == '__main__':
 
     print("this is the code for the saving results and linear programming for maxmin and ce")
 
-    data_file = sys.argv[1]
-    re_plot(data_file)
+    #data_file = sys.argv[1]
+    #re_plot(data_file)
 
 
 
